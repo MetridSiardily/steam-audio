@@ -18,6 +18,7 @@ using UnityEngine;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/material.html")]
     [CreateAssetMenu(menuName = "Steam Audio/Steam Audio Material")]
     public class SteamAudioMaterial : ScriptableObject
     {

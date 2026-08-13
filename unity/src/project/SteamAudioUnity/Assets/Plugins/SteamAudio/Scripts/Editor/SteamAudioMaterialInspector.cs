@@ -15,6 +15,7 @@
 //
 
 using UnityEditor;
+using UnityEngine;
 
 namespace SteamAudio
 {
@@ -23,12 +24,20 @@ namespace SteamAudio
     public class SteamAudioMaterialInspector : Editor
     {
         SerializedProperty lowFreqAbsorption;
+        readonly GUIContent lowFreqAbsorptionGUI = new("Low Freq Absorption", "Specifies how much sound the material absorbs at low frequencies (up to 800 Hz).");
         SerializedProperty midFreqAbsorption;
+        readonly GUIContent midFreqAbsorptionGUI = new("Mid Freq Absorption", "Specifies how much sound the material absorbs at middle frequencies (800 Hz - 8 kHz).");
         SerializedProperty highFreqAbsorption;
+        readonly GUIContent highFreqAbsorptionGUI = new("High Freq Absorption", "Specifies how much sound the material absorbs at high frequencies (8 kHz and above).");
         SerializedProperty scattering;
+        readonly GUIContent scatteringGUI = new("Scattering", "Specifies the \"roughness\" of the material when reflecting sound. " +
+        "0 = Sound is reflected in a perfectly mirror-like manner. 1 = Sound is reflected randomly in all directions.");
         SerializedProperty lowFreqTransmission;
+        readonly GUIContent lowFreqTransmissionGUI = new("Low Freq Transmission", "Specifies how much sound the material transmits at low frequencies (up to 800 Hz).");
         SerializedProperty midFreqTransmission;
+        readonly GUIContent midFreqTransmissionGUI = new("Mid Freq Transmission", "Specifies how much sound the material transmits at middle frequencies (800 Hz - 8 kHz).");
         SerializedProperty highFreqTransmission;
+        readonly GUIContent highFreqTransmissionGUI = new("High Freq Transmission", "Specifies how much sound the material transmits at high frequencies (8 kHz and above).");
 
         private void OnEnable()
         {
@@ -45,13 +54,13 @@ namespace SteamAudio
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(lowFreqAbsorption);
-            EditorGUILayout.PropertyField(midFreqAbsorption);
-            EditorGUILayout.PropertyField(highFreqAbsorption);
-            EditorGUILayout.PropertyField(scattering);
-            EditorGUILayout.PropertyField(lowFreqTransmission);
-            EditorGUILayout.PropertyField(midFreqTransmission);
-            EditorGUILayout.PropertyField(highFreqTransmission);
+            EditorGUILayout.PropertyField(lowFreqAbsorption, lowFreqAbsorptionGUI);
+            EditorGUILayout.PropertyField(midFreqAbsorption, midFreqAbsorptionGUI);
+            EditorGUILayout.PropertyField(highFreqAbsorption, highFreqAbsorptionGUI);
+            EditorGUILayout.PropertyField(scattering, scatteringGUI);
+            EditorGUILayout.PropertyField(lowFreqTransmission, lowFreqTransmissionGUI);
+            EditorGUILayout.PropertyField(midFreqTransmission, midFreqTransmissionGUI);
+            EditorGUILayout.PropertyField(highFreqTransmission, highFreqTransmissionGUI);
 
             serializedObject.ApplyModifiedProperties();
         }
