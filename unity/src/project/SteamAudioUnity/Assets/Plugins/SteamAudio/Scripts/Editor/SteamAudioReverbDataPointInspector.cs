@@ -30,8 +30,6 @@ namespace SteamAudio
 #if STEAMAUDIO_ENABLED
         private int[] allowedSampleRates = new int[] { 24000, 44100, 48000, 96000 };
         private GUIContent[] displaySampleRates = new GUIContent[] { new("24000 Hz"), new("44100 Hz"), new("48000 Hz"), new("96000 Hz") };
-
-        // Is there a reason SerializedProperties are public? Causing serialization warning
         SerializedProperty mSamplingRate;
         readonly GUIContent mSamplingRateGUI = new("Sampling Rate", "The frequency (Hz) used to generate the impulse response (IR). " +
         "Match this to the runtime audio engine’s sample rate; otherwise the IR must be resampled.");
