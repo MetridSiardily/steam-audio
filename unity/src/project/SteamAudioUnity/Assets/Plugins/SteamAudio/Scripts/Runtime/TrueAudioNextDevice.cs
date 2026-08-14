@@ -24,11 +24,13 @@ namespace SteamAudio
 
         public TrueAudioNextDevice(OpenCLDevice openCLDevice, int frameSize, int irSize, int order, int maxSources)
         {
-            var deviceSettings = new TrueAudioNextDeviceSettings { };
-            deviceSettings.frameSize = frameSize;
-            deviceSettings.irSize = irSize;
-            deviceSettings.order = order;
-            deviceSettings.maxSources = maxSources;
+            var deviceSettings = new TrueAudioNextDeviceSettings
+            {
+                frameSize = frameSize,
+                irSize = irSize,
+                order = order,
+                maxSources = maxSources
+            };
 
             var status = API.iplTrueAudioNextDeviceCreate(openCLDevice.Get(), ref deviceSettings, out mTrueAudioNextDevice);
             if (status != Error.Success)

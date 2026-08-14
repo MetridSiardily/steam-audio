@@ -128,11 +128,7 @@ namespace SteamAudio
             tasks[0].component = this;
             tasks[0].name = gameObject.name;
             tasks[0].identifier = mIdentifier;
-#if UNITY_2020_3_OR_NEWER
-            tasks[0].probeBatches = (useAllProbeBatches) ? FindObjectsByType<SteamAudioProbeBatch>(FindObjectsSortMode.None) : probeBatches;
-#else
-            tasks[0].probeBatches = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches;
-#endif
+            tasks[0].probeBatches = useAllProbeBatches ? FindObjectsByType<SteamAudioProbeBatch>() : probeBatches;
             tasks[0].probeBatchNames = new string[tasks[0].probeBatches.Length];
             tasks[0].probeBatchAssets = new SerializedData[tasks[0].probeBatches.Length];
             for (var i = 0; i < tasks[0].probeBatchNames.Length; ++i)
@@ -158,11 +154,7 @@ namespace SteamAudio
                 tasks[i].component = bakedListeners[i];
                 tasks[i].name = bakedListeners[i].gameObject.name;
                 tasks[i].identifier = bakedListeners[i].GetBakedDataIdentifier();
-#if UNITY_2020_3_OR_NEWER
-                tasks[i].probeBatches = (bakedListeners[i].useAllProbeBatches) ? FindObjectsByType<SteamAudioProbeBatch>(FindObjectsSortMode.None) : bakedListeners[i].probeBatches;
-#else
-                tasks[i].probeBatches = (bakedListeners[i].useAllProbeBatches) ?  FindObjectsOfType<SteamAudioProbeBatch>() : bakedListeners[i].probeBatches;
-#endif
+                tasks[i].probeBatches = bakedListeners[i].useAllProbeBatches ? FindObjectsByType<SteamAudioProbeBatch>() : bakedListeners[i].probeBatches;
                 tasks[i].probeBatchNames = new string[tasks[i].probeBatches.Length];
                 tasks[i].probeBatchAssets = new SerializedData[tasks[i].probeBatches.Length];
                 for (var j = 0; j < tasks[i].probeBatchNames.Length; ++j)
@@ -186,11 +178,7 @@ namespace SteamAudio
 
         void CacheProbeBatchesUsed()
         {
-#if UNITY_2020_3_OR_NEWER
-            mProbeBatchesUsed = (useAllProbeBatches) ? FindObjectsByType<SteamAudioProbeBatch>(FindObjectsSortMode.None) : probeBatches;
-#else
-            mProbeBatchesUsed = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches;
-#endif
+            mProbeBatchesUsed = useAllProbeBatches ? FindObjectsByType<SteamAudioProbeBatch>() : probeBatches;
         }
 #endif
     }

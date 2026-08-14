@@ -42,14 +42,16 @@ namespace SteamAudio
 
         public Material GetMaterial()
         {
-            var material = new Material { };
-            material.absorptionLow = lowFreqAbsorption;
-            material.absorptionMid = midFreqAbsorption;
-            material.absorptionHigh = highFreqAbsorption;
-            material.scattering = scattering;
-            material.transmissionLow = lowFreqTransmission;
-            material.transmissionMid = midFreqTransmission;
-            material.transmissionHigh = highFreqTransmission;
+            var material = new Material
+            {
+                absorptionLow = lowFreqAbsorption,
+                absorptionMid = midFreqAbsorption,
+                absorptionHigh = highFreqAbsorption,
+                scattering = scattering,
+                transmissionLow = lowFreqTransmission,
+                transmissionMid = midFreqTransmission,
+                transmissionHigh = highFreqTransmission
+            };
             return material;
         }
     }
