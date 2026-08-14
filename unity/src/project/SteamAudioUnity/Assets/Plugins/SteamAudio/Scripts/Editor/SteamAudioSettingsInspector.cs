@@ -144,10 +144,20 @@ namespace SteamAudio
 #else
             SceneTypeField();
 #endif
-
-            if (((SceneType) mSceneType.enumValueIndex) == SceneType.Custom)
+            if (((SceneType) mSceneType.enumValueIndex) == SceneType.Embree)
+            {
+                EditorGUILayout.HelpBox("Supported only on Windows, Linux, and macOS.", MessageType.Info);
+            }
+            else if (((SceneType) mSceneType.enumValueIndex) == SceneType.RadeonRays)
+            {
+                EditorGUILayout.HelpBox("Supported only on Windows 64-bit.", MessageType.Info);
+            }
+            else if (((SceneType) mSceneType.enumValueIndex) == SceneType.Custom)
             {
                 EditorGUILayout.PropertyField(mLayerMask);
+                EditorGUILayout.HelpBox(
+                    "Using Unity's built in ray tracer is the slowest of the available options and is not suitable for realtime " +
+                    "modelling of reflections, reverb, or pathing.", MessageType.Warning);
             }
 
             EditorGUILayout.PropertyField(mMaxOcclusionSamples);
