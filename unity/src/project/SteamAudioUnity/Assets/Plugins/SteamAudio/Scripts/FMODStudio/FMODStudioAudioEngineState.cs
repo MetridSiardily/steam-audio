@@ -57,7 +57,7 @@ namespace SteamAudio
     {
         public override Transform GetListenerTransform()
         {
-            var fmodStudioListener = (MonoBehaviour) GameObject.FindObjectOfType<FMODUnity.StudioListener>();
+            var fmodStudioListener = (MonoBehaviour)UnityEngine.Object.FindAnyObjectByType<FMODUnity.StudioListener>();
             return (fmodStudioListener != null) ? fmodStudioListener.transform : null;
         }
 
