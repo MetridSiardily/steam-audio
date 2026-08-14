@@ -25,7 +25,7 @@ namespace SteamAudio
     {
         SerializedProperty mDirectBinaural;
         readonly GUIContent mDirectBinauralGUI = new("Direct Binaural", "When enabled, HRTF-based binaural rendering will be used to spatialize the source. " +
-        "This requires 2-channel (stereo) audio output. If unchecked, panning will be used to the spatialize the source using the user’s speaker layout. " +
+        "This requires 2-channel (stereo) audio output. When disabled, panning will be used to the spatialize the source using the user’s speaker layout. " +
         "Binaural rendering provides improved spatialization at the cost of slightly increased CPU usage.");
         SerializedProperty mInterpolation;
         readonly GUIContent mInterpolationGUI = new("Interpolation", "Controls how HRTFs are interpolated when the source moves relative to the listener." +
@@ -36,8 +36,7 @@ namespace SteamAudio
         "but has higher CPU usage (up to 2x).");
         SerializedProperty mPerspectiveCorrection;
         readonly GUIContent mPerspectiveCorrectionGUI = new("Perspective Correction", "When enabled, perspective correction (based on the projection matrix of the " +
-        "current main camera) is applied to this source during spatialization. This can improve the perceived positional accuracy in non-VR applications. " +
-        "\nRequires <b>Enable Perspective Correction</b> to be checked in <b>Steam Audio Settings</b>.");
+        "current main camera) is applied to this source during spatialization. This can improve the perceived positional accuracy in non-VR applications.");
         SerializedProperty mDistanceAttenuation;
         readonly GUIContent mDistanceAttenuationGUI = new("Distance Attenuation", "When enabled, distance attenuation will be calculated and applied to the Audio Source. " +
         "This takes into account the Spatial Blend setting on the Audio Source, so if Spatial Blend is set to 2D, distance attenuation is effectively not applied.");
@@ -59,8 +58,9 @@ namespace SteamAudio
         SerializedProperty mDipolePower;
         SerializedProperty mDirectivityValue;
         SerializedProperty mOcclusion;
-        GUIContent mOcclusionGUI = new("Occlusion", "When enabled, attenuation based on the occlusion of the source by the " +
+        readonly GUIContent mOcclusionGUIUnity = new("Occlusion", "When enabled, attenuation based on the occlusion of the source by the " +
         "scene geometry will be applied to the Audio Source.");
+        readonly GUIContent mOcclusionGUIOther = new("Occlusion", "When enabled, ray tracing will be used to determine how much of the source is occluded.");
         SerializedProperty mOcclusionInput;
         SerializedProperty mOcclusionType;
         SerializedProperty mOcclusionRadius;
@@ -75,12 +75,18 @@ namespace SteamAudio
         SerializedProperty mTransmissionRays;
         SerializedProperty mDirectMixLevel;
         SerializedProperty mReflections;
+        readonly GUIContent mReflectionsGUIUnity = new("Reflections", "When enabled, reflections reaching the listener from the source will be simulated and applied " +
+        "to the Audio Source.");
+        readonly GUIContent mReflectionsGUIOther = new("Reflections", "When enabled, reflections reaching the listener from the source will be simulated.");
         SerializedProperty mReflectionsType;
         SerializedProperty mUseDistanceCurveForReflections;
         SerializedProperty mCurrentBakedSource;
         SerializedProperty mApplyHRTFToReflections;
         SerializedProperty mReflectionsMixLevel;
         SerializedProperty mPathing;
+        readonly GUIContent mPathingGUIUnity = new("Pathing", "When enabled, shortest paths taken by sound as it propogates from the source to the listener will be " +
+        "simulated, and appropriate spatialization will be applied to the Audio Source for these indirect paths.");
+        readonly GUIContent mPathingGUIOther = new("Pathing", "When enabled, shortest paths taken by sound as it propagates from the source to the listener will be simulated.");
         SerializedProperty mPathingProbeBatch;
         SerializedProperty mPathValidation;
         SerializedProperty mFindAlternatePaths;
@@ -207,7 +213,8 @@ namespace SteamAudio
                 }
             }
 
-            EditorGUILayout.PropertyField(mOcclusion, mOcclusionGUI);
+            if (audioEngineIsUnity) {   EditorGUILayout.PropertyField(mOcclusion, mOcclusionGUIUnity);  }
+            else if (!audioEngineIsUnity) {   EditorGUILayout.PropertyField(mOcclusion, mOcclusionGUIOther);   }
             if (mOcclusion.boolValue)
             {
                 if (audioEngineIsUnity)
@@ -265,7 +272,8 @@ namespace SteamAudio
                 EditorGUILayout.PropertyField(mDirectMixLevel);
             }
 
-            EditorGUILayout.PropertyField(mReflections);
+            if (audioEngineIsUnity) {   EditorGUILayout.PropertyField(mReflections, mReflectionsGUIUnity);  }
+            else if (!audioEngineIsUnity) {   EditorGUILayout.PropertyField(mReflections, mReflectionsGUIOther);   }
             if (mReflections.boolValue)
             {
                 EditorGUILayout.PropertyField(mReflectionsType);
@@ -289,7 +297,8 @@ namespace SteamAudio
                 }
             }
 
-            EditorGUILayout.PropertyField(mPathing);
+            if (audioEngineIsUnity) {   EditorGUILayout.PropertyField(mPathing, mPathingGUIUnity);  }
+            else if (!audioEngineIsUnity) {   EditorGUILayout.PropertyField(mPathing, mPathingGUIOther);   }
             if (mPathing.boolValue)
             {
                 EditorGUILayout.PropertyField(mPathingProbeBatch);
