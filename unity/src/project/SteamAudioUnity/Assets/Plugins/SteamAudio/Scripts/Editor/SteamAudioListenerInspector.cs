@@ -115,7 +115,7 @@ namespace SteamAudio
         [MenuItem("Steam Audio/Steam Audio Listener/Bake All Reverb In Current Scene", false, 64)]
         public static void BakeAllReverbInScene()
         {
-            var listeners = FindObjectsByType<SteamAudioListener>(FindObjectsSortMode.None); // FindObjectsSortMode deprecated as of 6.4 supported, needs replaced
+            var listeners = FindObjectsByType<SteamAudioListener>();
             if (listeners.Length == 0)
             {
                 EditorUtility.DisplayDialog(
