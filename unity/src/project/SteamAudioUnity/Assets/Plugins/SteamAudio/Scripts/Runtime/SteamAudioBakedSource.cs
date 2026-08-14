@@ -22,6 +22,7 @@ using UnityEditor;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/baked-source.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Baked Source")]
     public class SteamAudioBakedSource : MonoBehaviour
     {

@@ -19,6 +19,7 @@ using UnityEngine;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/ambisonic-source.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Ambisonic Source")]
     [RequireComponent(typeof(AudioSource))]
     public class SteamAudioAmbisonicSource : MonoBehaviour
