@@ -32,21 +32,21 @@ namespace SteamAudio
         private GUIContent[] displaySampleRates = new GUIContent[] { new("24000 Hz"), new("44100 Hz"), new("48000 Hz"), new("96000 Hz") };
 
         // Is there a reason SerializedProperties are public? Causing serialization warning
-        public SerializedProperty mSamplingRate;
+        SerializedProperty mSamplingRate;
         readonly GUIContent mSamplingRateGUI = new("Sampling Rate", "The frequency (Hz) used to generate the impulse response (IR). " +
         "Match this to the runtime audio engine’s sample rate; otherwise the IR must be resampled.");
-        public SerializedProperty mAmbisonicOrder;
+        SerializedProperty mAmbisonicOrder;
         readonly GUIContent mAmbisonicsOrderGUI = new("Ambisonic Order", "Specifies the Ambisonic order of the IRs generated when baking reverb. " +
         "Increasing this value results in more accurate directional variation of reflected sound, at the cost of increased disk space usage.");
-        public SerializedProperty mReverbDuration;
+        SerializedProperty mReverbDuration;
         readonly GUIContent mReverbDurationGUI = new("Reverb Duration (seconds)", "The duration (in seconds) of the IRs generated when baking reverb. " +
         "Increasing this value results in longer, more accurate reverb tails, at the cost of increased disk space usage.");
-        public SerializedProperty mReverbDataAsset;
+        SerializedProperty mReverbDataAsset;
         readonly GUIContent mReverbDataAssetGUI = new("Reverb Data", "Reference to the generated <b>Steam Audio Reverb Data</b> asset containing " +
         "this probe’s baked reverb. These assets are automatically placed in the <i><color=red>Assets/Resources/ReverbData</color></i> folder.");
-        public SerializedProperty mStoreEnergyField;
+        SerializedProperty mStoreEnergyField;
         readonly GUIContent mStoreEnergyFieldGUI = new("Store Energy Field", "When enabled, saves Steam Audio’s intermediate multi-band Energy Field data.");
-        public SerializedProperty mStoreImpulseResponse;
+        SerializedProperty mStoreImpulseResponse;
         readonly GUIContent mStoreImpulseResponseGUI = new("Store Impulse Response", "When enabled, stores the full multi-channel, " +
         "time-domain IR at the chosen sampling rate.");
         private Editor mReverbDataEditor;
