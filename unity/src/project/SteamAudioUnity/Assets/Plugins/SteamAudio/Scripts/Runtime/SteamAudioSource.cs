@@ -480,9 +480,11 @@ namespace SteamAudio
                 }
             }
 
-            mDeformedSphereMesh = new Mesh();
-            mDeformedSphereMesh.vertices = mDeformedSphereVertices;
-            mDeformedSphereMesh.triangles = indices;
+            mDeformedSphereMesh = new Mesh
+            {
+                vertices = mDeformedSphereVertices,
+                triangles = indices
+            };
             mDeformedSphereMesh.RecalculateNormals();
         }
 

@@ -49,7 +49,7 @@ namespace SteamAudio
 
         public int probeDataSize = 0;
         [SerializeField] Sphere[] mProbeSpheres = null;
-        [SerializeField] List<BakedDataLayerInfo> mBakedDataLayerInfo = new List<BakedDataLayerInfo>();
+        [SerializeField] List<BakedDataLayerInfo> mBakedDataLayerInfo = new();
 
 #if STEAMAUDIO_ENABLED
         ProbeBatch mProbeBatch = null;
@@ -161,11 +161,13 @@ namespace SteamAudio
 
             var probeArray = new ProbeArray(SteamAudioManager.Context);
 
-            var probeGenerationParams = new ProbeGenerationParams { };
-            probeGenerationParams.type = placementStrategy;
-            probeGenerationParams.spacing = horizontalSpacing;
-            probeGenerationParams.height = heightAboveFloor;
-            probeGenerationParams.transform = Common.ConvertTransform(gameObject.transform);
+            var probeGenerationParams = new ProbeGenerationParams
+            {
+                type = placementStrategy,
+                spacing = horizontalSpacing,
+                height = heightAboveFloor,
+                transform = Common.ConvertTransform(gameObject.transform)
+            };
 
             probeArray.GenerateProbes(scene, probeGenerationParams);
 
@@ -242,10 +244,12 @@ namespace SteamAudio
 
         public void AddLayer(GameObject gameObject, BakedDataIdentifier identifier, int dataSize)
         {
-            var layerInfo = new BakedDataLayerInfo { };
-            layerInfo.gameObject = gameObject;
-            layerInfo.identifier = identifier;
-            layerInfo.dataSize = dataSize;
+            var layerInfo = new BakedDataLayerInfo
+            {
+                gameObject = gameObject,
+                identifier = identifier,
+                dataSize = dataSize
+            };
 
             mBakedDataLayerInfo.Add(layerInfo);
         }
@@ -303,9 +307,11 @@ namespace SteamAudio
 
         BakedDataIdentifier GetBakedDataIdentifier()
         {
-            var identifier = new BakedDataIdentifier { };
-            identifier.type = BakedDataType.Pathing;
-            identifier.variation = BakedDataVariation.Dynamic;
+            var identifier = new BakedDataIdentifier
+            {
+                type = BakedDataType.Pathing,
+                variation = BakedDataVariation.Dynamic
+            };
             return identifier;
         }
 

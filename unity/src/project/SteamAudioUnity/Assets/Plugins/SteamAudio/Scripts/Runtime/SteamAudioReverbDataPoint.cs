@@ -77,9 +77,11 @@ namespace SteamAudio
 
         static BakedDataIdentifier GetBakedDataIdentifier()
         {
-            var identifier = new BakedDataIdentifier { };
-            identifier.type = BakedDataType.Reflections;
-            identifier.variation = BakedDataVariation.Reverb;
+            var identifier = new BakedDataIdentifier
+            {
+                type = BakedDataType.Reflections,
+                variation = BakedDataVariation.Reverb
+            };
             return identifier;
         }
 
