@@ -41,6 +41,7 @@ namespace SteamAudio
         Playing
     }
 
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/manager.html")]
     /**
      * Maintains global state for Steam Audio, manages simulations, and passes simulation results to the audio engine.
      */

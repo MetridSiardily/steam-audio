@@ -28,6 +28,7 @@ namespace SteamAudio
         Wwise
     }
 
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/settings.html")]
     [CreateAssetMenu(menuName = "Steam Audio/Steam Audio Settings")]
     public class SteamAudioSettings : ScriptableObject
     {

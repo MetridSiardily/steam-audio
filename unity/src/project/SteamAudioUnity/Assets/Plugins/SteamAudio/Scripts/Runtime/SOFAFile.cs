@@ -21,6 +21,7 @@ namespace SteamAudio
     /*
      * Represents a serializable object that is created when importing a .sofa file as an asset.
      */
+     [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/sofafile.html")]
     public class SOFAFile : ScriptableObject
     {
         // The name of the sofa file that was imported.

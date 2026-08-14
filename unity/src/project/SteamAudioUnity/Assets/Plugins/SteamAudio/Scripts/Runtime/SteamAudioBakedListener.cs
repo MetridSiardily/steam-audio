@@ -22,6 +22,7 @@ using UnityEditor;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/baked-listener.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Baked Listener")]
     public class SteamAudioBakedListener : MonoBehaviour
     {

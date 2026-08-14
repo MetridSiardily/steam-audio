@@ -66,6 +66,7 @@ namespace SteamAudio
         public AnimationCurve curve;
     }
 
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/source.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Source")]
     public class SteamAudioSource : MonoBehaviour
     {
