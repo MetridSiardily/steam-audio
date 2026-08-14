@@ -62,19 +62,16 @@ namespace SteamAudio
     {
         public override Transform GetListenerTransform()
         {
-#if UNITY_2023_3_OR_NEWER
-            var audioListener = GameObject.FindFirstObjectByType<AudioListener>();
-#else
-            var audioListener = GameObject.FindObjectOfType<AudioListener>();
-#endif
+            var audioListener = UnityEngine.Object.FindAnyObjectByType<AudioListener>();
             return (audioListener != null) ? audioListener.transform : null;
         }
 
         public override AudioSettings GetAudioSettings()
         {
-            var audioSettings = new AudioSettings { };
-
-            audioSettings.samplingRate = UnityEngine.AudioSettings.outputSampleRate;
+            var audioSettings = new AudioSettings
+            {
+                samplingRate = UnityEngine.AudioSettings.outputSampleRate
+            };
 
             var numBuffers = 0;
             UnityEngine.AudioSettings.GetDSPBufferSize(out audioSettings.frameSize, out numBuffers);

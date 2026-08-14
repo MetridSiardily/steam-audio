@@ -78,7 +78,9 @@ namespace SteamAudio
             }
 
             EditorGUILayout.Space();
-            if (GUILayout.Button(new GUIContent("Bake", "Starts baking reverb for selected probe batches or all probe batches if <b>Use All Probe Batches</b> is enabled.")))
+            GUIContent bakeButtonGUI = mUseAllProbeBatches.boolValue ? new("Bake All Probe Batches", "Bake reverb data for every " +
+            "probe batch in the scene.") : new("Bake Assigned Probe Batches", "Bake reverb data for probe batches assigned in <b>Probe Batches</b>.");
+            if (GUILayout.Button(bakeButtonGUI))
             {
                 tgt.BeginBake();
                 mShouldShowProgressBar = true;

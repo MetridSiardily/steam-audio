@@ -236,9 +236,11 @@ namespace SteamAudio
 
         public static SimulationSettings GetSimulationSettings(bool baking)
         {
-            var simulationSettings = new SimulationSettings { };
-            simulationSettings.sceneType = GetSceneType();
-            simulationSettings.reflectionType = GetReflectionEffectType();
+            var simulationSettings = new SimulationSettings
+            {
+                sceneType = GetSceneType(),
+                reflectionType = GetReflectionEffectType()
+            };
 
             if (baking)
             {
