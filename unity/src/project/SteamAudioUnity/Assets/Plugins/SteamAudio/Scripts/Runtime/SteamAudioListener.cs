@@ -28,6 +28,7 @@ namespace SteamAudio
         Baked
     }
 
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/listener.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Listener")]
     public class SteamAudioListener : MonoBehaviour
     {
@@ -223,7 +224,7 @@ namespace SteamAudio
             tasks[0].component = this;
             tasks[0].name = gameObject.name;
             tasks[0].identifier = mIdentifier;
-            tasks[0].probeBatches = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches;
+            tasks[0].probeBatches = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches; // FindObjectsOfType deprecated as of 2023.1, needs replaced
             tasks[0].probeBatchNames = new string[tasks[0].probeBatches.Length];
             tasks[0].probeBatchAssets = new SerializedData[tasks[0].probeBatches.Length];
             for (var i = 0; i < tasks[0].probeBatchNames.Length; ++i)
@@ -249,7 +250,7 @@ namespace SteamAudio
                 tasks[i].component = listeners[i];
                 tasks[i].name = listeners[i].gameObject.name;
                 tasks[i].identifier = listeners[i].GetBakedDataIdentifier();
-                tasks[i].probeBatches = (listeners[i].useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : listeners[i].probeBatches;
+                tasks[i].probeBatches = (listeners[i].useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : listeners[i].probeBatches; // FindObjectsOfType deprecated as of 2023.1, needs replaced
                 tasks[i].probeBatchNames = new string[tasks[i].probeBatches.Length];
                 tasks[i].probeBatchAssets = new SerializedData[tasks[i].probeBatches.Length];
 
@@ -275,7 +276,7 @@ namespace SteamAudio
 
         void CacheProbeBatchesUsed()
         {
-            mProbeBatchesUsed = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches;
+            mProbeBatchesUsed = (useAllProbeBatches) ? FindObjectsOfType<SteamAudioProbeBatch>() : probeBatches; // FindObjectsOfType deprecated as of 2023.1, needs replaced
         }
 #endif
     }

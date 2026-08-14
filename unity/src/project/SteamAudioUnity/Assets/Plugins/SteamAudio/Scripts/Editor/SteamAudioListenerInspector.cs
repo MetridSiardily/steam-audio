@@ -24,10 +24,23 @@ namespace SteamAudio
     {
 #if STEAMAUDIO_ENABLED
         SerializedProperty mCurrentBakedListener;
+        readonly GUIContent mCurrentBakedListenerGUI = new("Current Baked Listener", "When simulating reflections for a source whose <b>Reflections Type</b> " +
+        "is set to <b>Baked Static Listener</b>, the position and orientation of the GameObject specified in this field will be used as the position and " +
+        "orientation of the listener.");
         SerializedProperty mApplyReverb;
+        readonly GUIContent mApplyReverbGUI = new("Apply Reverb", "When enabled, listener-centric reverb will be simulated. " +
+        "This allows the <b>Steam Audio Reverb</b> mixer effect to process audio of whatever channel it is assigned to.");
         SerializedProperty mReverbType;
+        readonly GUIContent mReverbTypeGUI = new("Reverb Type", "Specifies how listener-centric reverb is simulated." +
+        "\n<b>Realtime</b>. Rays are traced from the listener in real-time, and bounced around the scene to simulate reverberation. " +
+        "This allows reverb to vary smoothly and account for dynamic geometry, at the cost of significant CPU usage." +
+        "\n<b>Baked.</b> Baked reverb data is used to interpolate the reverberation at the listener position. " +
+        "This prevents reverb from accounting for dynamic geometry and results in relatively low CPU usage, at the cost of increased memory and disk space usage.");
         SerializedProperty mUseAllProbeBatches;
+        readonly GUIContent mUseAllProbeBatchesGUI = new("Use All Probe Batches", "When enabled, reverb data will be baked into every probe batch in the scene.");
         SerializedProperty mProbeBatches;
+        readonly GUIContent mProbeBatchesGUI = new("Probe Batches", "If <b>Use All Probe Batches</b> is disabled, " +
+        "this is a list of probe batches into which reverb data will be baked.");
 
         bool mStatsFoldout = false;
         static bool mShouldShowProgressBar = false;
@@ -45,12 +58,12 @@ namespace SteamAudio
         {
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(mCurrentBakedListener);
+            EditorGUILayout.PropertyField(mCurrentBakedListener, mCurrentBakedListenerGUI);
 
-            EditorGUILayout.PropertyField(mApplyReverb);
+            EditorGUILayout.PropertyField(mApplyReverb, mApplyReverbGUI);
             if (mApplyReverb.boolValue)
             {
-                EditorGUILayout.PropertyField(mReverbType);
+                EditorGUILayout.PropertyField(mReverbType, mReverbTypeGUI);
             }
 
             var oldGUIEnabled = GUI.enabled;
@@ -58,14 +71,14 @@ namespace SteamAudio
 
             var tgt = target as SteamAudioListener;
 
-            EditorGUILayout.PropertyField(mUseAllProbeBatches);
+            EditorGUILayout.PropertyField(mUseAllProbeBatches, mUseAllProbeBatchesGUI);
             if (!mUseAllProbeBatches.boolValue)
             {
-                EditorGUILayout.PropertyField(mProbeBatches);
+                EditorGUILayout.PropertyField(mProbeBatches, mProbeBatchesGUI);
             }
 
             EditorGUILayout.Space();
-            if (GUILayout.Button("Bake"))
+            if (GUILayout.Button(new GUIContent("Bake", "Starts baking reverb for selected probe batches or all probe batches if <b>Use All Probe Batches</b> is enabled.")))
             {
                 tgt.BeginBake();
                 mShouldShowProgressBar = true;
@@ -102,7 +115,7 @@ namespace SteamAudio
         [MenuItem("Steam Audio/Steam Audio Listener/Bake All Reverb In Current Scene", false, 64)]
         public static void BakeAllReverbInScene()
         {
-            var listeners = FindObjectsByType<SteamAudioListener>(FindObjectsSortMode.None);
+            var listeners = FindObjectsByType<SteamAudioListener>(FindObjectsSortMode.None); // FindObjectsSortMode deprecated as of 6.4 supported, needs replaced
             if (listeners.Length == 0)
             {
                 EditorUtility.DisplayDialog(

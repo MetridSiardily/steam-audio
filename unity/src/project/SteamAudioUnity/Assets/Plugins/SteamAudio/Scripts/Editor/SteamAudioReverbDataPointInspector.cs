@@ -28,15 +28,27 @@ namespace SteamAudio
     public class SteamAudioReverbDataPointInspector : Editor
     {
 #if STEAMAUDIO_ENABLED
-        private int[] alllowedSampleRates = new int[] { 24000, 44100, 48000, 96000 };
-        private string[] displaySampleRates = new string[] { "24000 Hz", "44100 Hz", "48000 Hz", "96000 Hz" };
-        public SerializedProperty mSamplingRate;
+        private int[] allowedSampleRates = new int[] { 24000, 44100, 48000, 96000 };
+        private GUIContent[] displaySampleRates = new GUIContent[] { new("24000 Hz"), new("44100 Hz"), new("48000 Hz"), new("96000 Hz") };
 
+        // Is there a reason SerializedProperties are public? Causing serialization warning
+        public SerializedProperty mSamplingRate;
+        readonly GUIContent mSamplingRateGUI = new("Sampling Rate", "The frequency (Hz) used to generate the impulse response (IR). " +
+        "Match this to the runtime audio engine’s sample rate; otherwise the IR must be resampled.");
         public SerializedProperty mAmbisonicOrder;
+        readonly GUIContent mAmbisonicsOrderGUI = new("Ambisonic Order", "Specifies the Ambisonic order of the IRs generated when baking reverb. " +
+        "Increasing this value results in more accurate directional variation of reflected sound, at the cost of increased disk space usage.");
         public SerializedProperty mReverbDuration;
+        readonly GUIContent mReverbDurationGUI = new("Reverb Duration (seconds)", "The duration (in seconds) of the IRs generated when baking reverb. " +
+        "Increasing this value results in longer, more accurate reverb tails, at the cost of increased disk space usage.");
         public SerializedProperty mReverbDataAsset;
+        readonly GUIContent mReverbDataAssetGUI = new("Reverb Data", "Reference to the generated <b>Steam Audio Reverb Data</b> asset containing " +
+        "this probe’s baked reverb. These assets are automatically placed in the <i><color=red>Assets/Resources/ReverbData</color></i> folder.");
         public SerializedProperty mStoreEnergyField;
+        readonly GUIContent mStoreEnergyFieldGUI = new("Store Energy Field", "When enabled, saves Steam Audio’s intermediate multi-band Energy Field data.");
         public SerializedProperty mStoreImpulseResponse;
+        readonly GUIContent mStoreImpulseResponseGUI = new("Store Impulse Response", "When enabled, stores the full multi-channel, " +
+        "time-domain IR at the chosen sampling rate.");
         private Editor mReverbDataEditor;
 
         static bool mShouldShowProgressBar = false;
@@ -98,7 +110,7 @@ namespace SteamAudio
             }
 
             // Go through all the assets and make a list of referenced SteamAudioProbe Assets.
-            List<string> referencedReverbDataAssetPaths = new List<string>();
+            List<string> referencedReverbDataAssetPaths = new();
             var assetPaths = AssetDatabase.GetAllAssetPaths();
             foreach (var assetPath in assetPaths)
             {
@@ -152,16 +164,16 @@ namespace SteamAudio
             EditorGUILayout.LabelField("Reverb Settings", EditorStyles.boldLabel);
 
             var tgt = target as SteamAudioReverbDataPoint;
-            int sampleRateIndex = System.Array.IndexOf(alllowedSampleRates, tgt.sampleRate);
+            int sampleRateIndex = System.Array.IndexOf(allowedSampleRates, tgt.sampleRate);
             if (sampleRateIndex < 0)
             {
                 sampleRateIndex = 0;
-                tgt.sampleRate = alllowedSampleRates[sampleRateIndex];
+                tgt.sampleRate = allowedSampleRates[sampleRateIndex];
             }
 
             EditorGUI.showMixedValue = mSamplingRate.hasMultipleDifferentValues;
             EditorGUI.BeginChangeCheck();
-            int newSampleRate = EditorGUILayout.IntPopup("Sampling Rate", tgt.sampleRate, displaySampleRates, alllowedSampleRates);
+            int newSampleRate = EditorGUILayout.IntPopup(mSamplingRateGUI, tgt.sampleRate, displaySampleRates, allowedSampleRates);
             var selectedProbes = targets.Cast<SteamAudioReverbDataPoint>().ToArray();
 
             if (EditorGUI.EndChangeCheck())
@@ -176,10 +188,10 @@ namespace SteamAudio
                 }
             }
 
-            EditorGUILayout.PropertyField(mAmbisonicOrder);
-            EditorGUILayout.PropertyField(mReverbDuration, new UnityEngine.GUIContent("Reverb Duration (seconds)"));
-            EditorGUILayout.PropertyField(mStoreEnergyField);
-            EditorGUILayout.PropertyField(mStoreImpulseResponse);
+            EditorGUILayout.PropertyField(mAmbisonicOrder, mAmbisonicsOrderGUI);
+            EditorGUILayout.PropertyField(mReverbDuration, mReverbDurationGUI);
+            EditorGUILayout.PropertyField(mStoreEnergyField, mStoreEnergyFieldGUI);
+            EditorGUILayout.PropertyField(mStoreImpulseResponse, mStoreImpulseResponseGUI);
 
             GUI.enabled = !Baker.IsBakeActive() && !EditorApplication.isPlayingOrWillChangePlaymode;
             EditorGUILayout.Space();
@@ -205,11 +217,11 @@ namespace SteamAudio
             }
 
             // Display Stats
-            EditorGUILayout.PropertyField(mReverbDataAsset);
+            EditorGUILayout.PropertyField(mReverbDataAsset, mReverbDataAssetGUI);
             EditorGUILayout.Space();
             if (mReverbDataAsset.objectReferenceValue != null)
             {
-                Editor.CreateCachedEditor(mReverbDataAsset.objectReferenceValue, null, ref mReverbDataEditor);
+                CreateCachedEditor(mReverbDataAsset.objectReferenceValue, null, ref mReverbDataEditor);
 
                 // Pass the flag down for multi editing.
                 if (mReverbDataEditor is ReverbDataEditor reverbDataEditor)

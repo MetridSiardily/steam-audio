@@ -19,6 +19,7 @@ using UnityEngine;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/dynamic-object.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Dynamic Object")]
     public class SteamAudioDynamicObject : MonoBehaviour
     {

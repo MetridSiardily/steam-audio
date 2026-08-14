@@ -18,6 +18,7 @@ using UnityEngine;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/geometry.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Geometry")]
     public class SteamAudioGeometry : MonoBehaviour
     {

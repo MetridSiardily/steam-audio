@@ -26,6 +26,7 @@ using UnityEditor;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/reverbdatapoint.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Reverb Data Point")]
     [ExecuteAlways]
     public class SteamAudioReverbDataPoint : MonoBehaviour

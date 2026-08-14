@@ -20,6 +20,7 @@ using UnityEngine;
 
 namespace SteamAudio
 {
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/static-mesh.html")]
     public class SteamAudioStaticMesh : MonoBehaviour
     {
         [Header("Export Settings")]

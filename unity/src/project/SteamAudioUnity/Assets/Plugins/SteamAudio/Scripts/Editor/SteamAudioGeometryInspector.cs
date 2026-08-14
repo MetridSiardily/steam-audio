@@ -25,8 +25,15 @@ namespace SteamAudio
     {
 #if STEAMAUDIO_ENABLED
         SerializedProperty mMaterial;
+        readonly GUIContent mMaterialGUI = new("Material", "Reference to the Steam Audio Material asset that defines the acoustic properties of this geometry. " +
+        "If not set, the project-wide default material is used.");
         SerializedProperty mExportAllChildren;
+        readonly GUIContent mExportAllChildrenGUI = new("Export All Children", "When enabled, the geometry of all children with a <b>Mesh Filter</b> or <b>Terrain</b> " +
+        "attached to them will be exported as acoustic geometry.");
         SerializedProperty mTerrainSimplificationLevel;
+        readonly GUIContent mTerrainSimplificationLevelGUI = new("Terrain Simplification Level", "Geometry that is represented by a Terrain can be quite complex. " +
+        "This can slow down the calculation of occlusion and sound propagation. To speed things up, you can adjust this slider. As you increase this value, " +
+        "Steam Audio will reduce the level of detail in the terrain. This will result in faster simulation.");
 
         private void OnEnable()
         {
@@ -41,16 +48,16 @@ namespace SteamAudio
 
             var tgt = target as SteamAudioGeometry;
 
-            EditorGUILayout.PropertyField(mMaterial);
+            EditorGUILayout.PropertyField(mMaterial, mMaterialGUI);
 
             if (tgt.transform.childCount != 0)
             {
-                EditorGUILayout.PropertyField(mExportAllChildren);
+                EditorGUILayout.PropertyField(mExportAllChildren, mExportAllChildrenGUI);
             }
 
             if (tgt.gameObject.GetComponent<Terrain>() != null)
             {
-                EditorGUILayout.PropertyField(mTerrainSimplificationLevel);
+                EditorGUILayout.PropertyField(mTerrainSimplificationLevel, mTerrainSimplificationLevelGUI);
             }
 
             EditorGUILayout.Space();
