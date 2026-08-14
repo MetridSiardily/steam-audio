@@ -33,6 +33,7 @@ namespace SteamAudio
         public int dataSize;
     }
 
+    [HelpURL("https://valvesoftware.github.io/steam-audio/doc/unity/probe-batch.html")]
     [AddComponentMenu("Steam Audio/Steam Audio Probe Batch")]
     public class SteamAudioProbeBatch : MonoBehaviour
     {
