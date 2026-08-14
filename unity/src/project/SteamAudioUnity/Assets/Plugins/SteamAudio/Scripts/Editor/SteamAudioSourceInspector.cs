@@ -24,21 +24,43 @@ namespace SteamAudio
     public class SteamAudioSourceInspector : Editor
     {
         SerializedProperty mDirectBinaural;
+        readonly GUIContent mDirectBinauralGUI = new("Direct Binaural", "When enabled, HRTF-based binaural rendering will be used to spatialize the source. " +
+        "This requires 2-channel (stereo) audio output. If unchecked, panning will be used to the spatialize the source using the user’s speaker layout. " +
+        "Binaural rendering provides improved spatialization at the cost of slightly increased CPU usage.");
         SerializedProperty mInterpolation;
+        readonly GUIContent mInterpolationGUI = new("Interpolation", "Controls how HRTFs are interpolated when the source moves relative to the listener." +
+        "\n<b>Nearest:</b> Uses the HRTF from the direction nearest to the direction of the source for which HRTF data is available. " +
+        "The fastest option, but can result in audible artifacts for certain kinds of audio clips, such as white noise or engine sounds." +
+        "\n<b>Bilinear:</b> Uses an HRTF generated after interpolating from four directions nearest to the direction of the source, " +
+        "for which HRTF data is available. This may result in smoother audio for some kinds of sources when the listener looks around, " +
+        "but has higher CPU usage (up to 2x).");
         SerializedProperty mPerspectiveCorrection;
+        readonly GUIContent mPerspectiveCorrectionGUI = new("Perspective Correction", "When enabled, perspective correction (based on the projection matrix of the " +
+        "current main camera) is applied to this source during spatialization. This can improve the perceived positional accuracy in non-VR applications. " +
+        "\nRequires <b>Enable Perspective Correction</b> to be checked in <b>Steam Audio Settings</b>.");
         SerializedProperty mDistanceAttenuation;
+        readonly GUIContent mDistanceAttenuationGUI = new("Distance Attenuation", "When enabled, distance attenuation will be calculated and applied to the Audio Source. " +
+        "This takes into account the Spatial Blend setting on the Audio Source, so if Spatial Blend is set to 2D, distance attenuation is effectively not applied.");
         SerializedProperty mDistanceAttenuationInput;
+        readonly GUIContent mDistanceAttenuationInputGUI = new("Distance Attenuation Input", "Specifies how the distance attenuation value is determined." +
+        "\n<b>Curve Driven:</b> Distance attenuation is controlled by the Volume curve on the Audio Source.");
         SerializedProperty mAirAbsorption;
+        readonly GUIContent mAirAbsorptionGUI = new("Air Absorption", "When enabled, frequency-dependent distance based air absorption will be calculated and " +
+        "applied to the Audio Source.");
         SerializedProperty mAirAbsorptionInput;
         SerializedProperty mAirAbsorptionLow;
         SerializedProperty mAirAbsorptionMid;
         SerializedProperty mAirAbsorptionHigh;
         SerializedProperty mDirectivity;
+        readonly GUIContent mDirectivityGUI = new("Directivity", "If checked, attenuation based on the source’s directivity pattern and orientation will be applied " +
+        "to the Audio Source.");
         SerializedProperty mDirectivityInput;
         SerializedProperty mDipoleWeight;
         SerializedProperty mDipolePower;
         SerializedProperty mDirectivityValue;
         SerializedProperty mOcclusion;
+        GUIContent mOcclusionGUI = new("Occlusion", "When enabled, attenuation based on the occlusion of the source by the " +
+        "scene geometry will be applied to the Audio Source.");
         SerializedProperty mOcclusionInput;
         SerializedProperty mOcclusionType;
         SerializedProperty mOcclusionRadius;
@@ -116,32 +138,43 @@ namespace SteamAudio
             mNormalizePathingEQ = serializedObject.FindProperty("normalizePathingEQ");
         }
 
+        [MenuItem("GameObject/Steam Audio/Steam Audio Source", false, 12)]
+        static void CreateGameObjectWithSource(MenuCommand menuCommand)
+        {
+            var name = GameObjectUtility.GetUniqueNameForSibling(null, "Steam Audio Source");
+            var gameObject = ObjectFactory.CreateGameObject(name, typeof(SteamAudioSource));
+
+            ObjectFactory.PlaceGameObject(gameObject, menuCommand.context as GameObject);
+            Selection.activeGameObject = gameObject;
+        }
+
         public override void OnInspectorGUI()
         {
-            var audioEngineIsUnity = (SteamAudioSettings.Singleton.audioEngine == AudioEngineType.Unity);
+            var audioEngineIsUnity = SteamAudioSettings.Singleton.audioEngine == AudioEngineType.Unity;
 
             serializedObject.Update();
 
             if (audioEngineIsUnity)
             {
-                EditorGUILayout.PropertyField(mDirectBinaural);
-                EditorGUILayout.PropertyField(mInterpolation);
+                EditorGUILayout.PropertyField(mDirectBinaural, mDirectBinauralGUI);
+
+                EditorGUILayout.PropertyField(mInterpolation, mInterpolationGUI);
             }
 
             if (audioEngineIsUnity && SteamAudioSettings.Singleton.perspectiveCorrection)
             {
-                EditorGUILayout.PropertyField(mPerspectiveCorrection);
+                EditorGUILayout.PropertyField(mPerspectiveCorrection, mPerspectiveCorrectionGUI);
             }
 
             if (audioEngineIsUnity)
             {
-                EditorGUILayout.PropertyField(mDistanceAttenuation);
-                EditorGUILayout.PropertyField(mDistanceAttenuationInput);
+                EditorGUILayout.PropertyField(mDistanceAttenuation, mDistanceAttenuationGUI);
+                EditorGUILayout.PropertyField(mDistanceAttenuationInput, mDistanceAttenuationInputGUI);
             }
 
             if (audioEngineIsUnity)
             {
-                EditorGUILayout.PropertyField(mAirAbsorption);
+                EditorGUILayout.PropertyField(mAirAbsorption, mAirAbsorptionGUI);
                 if (mAirAbsorption.boolValue)
                 {
                     EditorGUILayout.PropertyField(mAirAbsorptionInput);
@@ -156,7 +189,7 @@ namespace SteamAudio
 
             if (audioEngineIsUnity)
             {
-                EditorGUILayout.PropertyField(mDirectivity);
+                EditorGUILayout.PropertyField(mDirectivity, mDirectivityGUI);
                 if (mDirectivity.boolValue)
                 {
                     EditorGUILayout.PropertyField(mDirectivityInput);
@@ -174,7 +207,7 @@ namespace SteamAudio
                 }
             }
 
-            EditorGUILayout.PropertyField(mOcclusion);
+            EditorGUILayout.PropertyField(mOcclusion, mOcclusionGUI);
             if (mOcclusion.boolValue)
             {
                 if (audioEngineIsUnity)
