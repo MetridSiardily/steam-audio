@@ -195,7 +195,8 @@ namespace SteamAudio
 
             GUI.enabled = !Baker.IsBakeActive() && !EditorApplication.isPlayingOrWillChangePlaymode;
             EditorGUILayout.Space();
-            string bakeButtonString = serializedObject.isEditingMultipleObjects ? "Bake Selected Probes" : "Bake";
+            GUIContent bakeButtonString = serializedObject.isEditingMultipleObjects ? new("Bake Selected Probes", "Bake reverb " +
+            "for currently selected probes.") : new("Bake", "Bake reverb for the selected probe.");
             if (GUILayout.Button(bakeButtonString))
             {
                 SteamAudioReverbDataPoint.BeginBake(selectedProbes);
