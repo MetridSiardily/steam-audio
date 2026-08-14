@@ -15,6 +15,7 @@
 //
 
 using UnityEditor;
+using UnityEngine;
 
 namespace SteamAudio
 {
@@ -23,10 +24,28 @@ namespace SteamAudio
     public class SteamAudioAmbisonicSourceInspector : Editor
     {
         SerializedProperty mApplyHRTF;
+        readonly GUIContent mApplyHRTFGUI = new("Apply HRTF", "When enabled, the Ambisonic audio clip is spatialized using HRTF-based binaural rendering. " +
+        "Provides an improvement in spatialization quality at the cost of a slight increase in CPU usage. Default is Enabled.");
 
         private void OnEnable()
         {
             mApplyHRTF = serializedObject.FindProperty("applyHRTF");
+        }
+
+        [MenuItem("GameObject/Steam Audio/Steam Audio Ambisonic Source", false, 9)]
+        static void CreateGameObjectWithProbeBatch(MenuCommand menuCommand)
+        {
+            var name = GameObjectUtility.GetUniqueNameForSibling(null, "Steam Audio Ambisonic Source");
+            var gameObject = ObjectFactory.CreateGameObject(name, typeof(SteamAudioAmbisonicSource));
+            UnityEditorInternal.ComponentUtility.MoveComponentUp(gameObject.GetComponent<SteamAudioAmbisonicSource>());
+
+            ObjectFactory.PlaceGameObject(gameObject, menuCommand.context as GameObject);
+            Selection.activeGameObject = gameObject;
+            if (SteamAudioSettings.Singleton.audioEngine != AudioEngineType.Unity)
+            {
+                Debug.LogWarning("Steam Audio Ambisonic Source requires the audio engine to be set to Unity. Click" +
+                "Steam Audio > Settings to change this.");
+            }
         }
 
         public override void OnInspectorGUI()
@@ -42,7 +61,7 @@ namespace SteamAudio
 
             serializedObject.Update();
 
-            EditorGUILayout.PropertyField(mApplyHRTF);
+            EditorGUILayout.PropertyField(mApplyHRTF, mApplyHRTFGUI);
 
             serializedObject.ApplyModifiedProperties();
         }

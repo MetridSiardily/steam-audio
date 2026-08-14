@@ -49,6 +49,16 @@ namespace SteamAudio
             mAsset = serializedObject.FindProperty("asset");
         }
 
+        [MenuItem("GameObject/Steam Audio/Steam Audio Probe Batch", false, 9)]
+        static void CreateGameObjectWithProbeBatch(MenuCommand menuCommand)
+        {
+            var name = GameObjectUtility.GetUniqueNameForSibling(null, "Steam Audio Probe Batch");
+            var gameObject = ObjectFactory.CreateGameObject(name, typeof(SteamAudioProbeBatch));
+
+            ObjectFactory.PlaceGameObject(gameObject, menuCommand.context as GameObject);
+            Selection.activeGameObject = gameObject;
+        }
+
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
