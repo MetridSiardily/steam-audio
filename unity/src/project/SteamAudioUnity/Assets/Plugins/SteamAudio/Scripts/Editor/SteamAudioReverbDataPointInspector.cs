@@ -66,12 +66,11 @@ namespace SteamAudio
         [MenuItem("GameObject/Steam Audio/Steam Audio Reverb Data Point", false, 10)]
         static void CreateGameObjectWithProbe(MenuCommand menuCommand)
         {
-            var gameObject = new GameObject("Steam Audio Reverb Data Point");
-            gameObject.AddComponent<SteamAudioReverbDataPoint>();
+            var name = GameObjectUtility.GetUniqueNameForSibling(null, "Steam Audio Reverb Data Point");
+            var gameObject = ObjectFactory.CreateGameObject(name, typeof(SteamAudioReverbDataPoint));
 
-            GameObjectUtility.SetParentAndAlign(gameObject, menuCommand.context as GameObject);
-
-            Undo.RegisterCreatedObjectUndo(gameObject, "Create " + gameObject.name);
+            ObjectFactory.PlaceGameObject(gameObject, menuCommand.context as GameObject);
+            Selection.activeGameObject = gameObject;
         }
 
         [MenuItem("Steam Audio/Steam Audio Reverb Data Point/Bake All", false, 61)]
