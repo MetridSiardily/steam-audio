@@ -86,8 +86,11 @@ namespace SteamAudio
             {
                 fileName = lastArg + "/" + fileName;
             }
-            
+#if UNITY_6000_6_OR_NEWER
             UnityEditor.AssetPackage.Package.Export(new(assets, fileName, "", ExportPackageOptions.Recurse)); // Needs testing
+#else
+            AssetDatabase.ExportPackage(assets, fileName, ExportPackageOptions.Recurse);
+#endif
         }
     }
 
