@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cb82a87a4954a947923856a12b49b38, type: 3}
-  m_Name: Gravel
+  m_Name: Bark
   m_EditorClassIdentifier: 
-  lowFreqAbsorption: 0.6
-  midFreqAbsorption: 0.7
-  highFreqAbsorption: 0.8
-  scattering: 0.4
-  lowFreqTransmission: 0.031
-  midFreqTransmission: 0.012
-  highFreqTransmission: 0.008
+  lowFreqAbsorption: 0.11
+  midFreqAbsorption: 0.07
+  highFreqAbsorption: 0.06
+  scattering: 0.25
+  lowFreqTransmission: 0.07
+  midFreqTransmission: 0.014
+  highFreqTransmission: 0.005
