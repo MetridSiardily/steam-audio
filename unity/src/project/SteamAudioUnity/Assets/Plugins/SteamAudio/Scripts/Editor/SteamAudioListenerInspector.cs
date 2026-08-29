@@ -58,6 +58,16 @@ namespace SteamAudio
         {
             serializedObject.Update();
 
+            if (SteamAudioSettings.Singleton.audioEngine == AudioEngineType.Unity)
+            {
+                var listenerTarget = target as SteamAudioListener; // Consider consolidating this into tgt var later in OnInspectorGUI()
+                if (!listenerTarget.gameObject.TryGetComponent(out AudioListener aL))
+                {
+                    EditorGUILayout.HelpBox(
+                    "Audio Engine is set to Unity but no Unity Audio Listener is on the object. This will cause a crash.", MessageType.Error);
+                }
+            }
+
             EditorGUILayout.PropertyField(mCurrentBakedListener, mCurrentBakedListenerGUI);
 
             EditorGUILayout.PropertyField(mApplyReverb, mApplyReverbGUI);
