@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cb82a87a4954a947923856a12b49b38, type: 3}
-  m_Name: Rock
+  m_Name: Bark
   m_EditorClassIdentifier: 
-  lowFreqAbsorption: 0.13
-  midFreqAbsorption: 0.2
-  highFreqAbsorption: 0.24
-  scattering: 0.1
-  lowFreqTransmission: 0.015
-  midFreqTransmission: 0.002
-  highFreqTransmission: 0.001
+  lowFreqAbsorption: 0.11
+  midFreqAbsorption: 0.07
+  highFreqAbsorption: 0.06
+  scattering: 0.25
+  lowFreqTransmission: 0.07
+  midFreqTransmission: 0.014
+  highFreqTransmission: 0.005

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cb82a87a4954a947923856a12b49b38, type: 3}
-  m_Name: Rock
-  m_EditorClassIdentifier: 
-  lowFreqAbsorption: 0.13
-  midFreqAbsorption: 0.2
-  highFreqAbsorption: 0.24
-  scattering: 0.1
-  lowFreqTransmission: 0.015
-  midFreqTransmission: 0.002
-  highFreqTransmission: 0.001
+  m_Name: Sand
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioMaterial
+  lowFreqAbsorption: 0.12
+  midFreqAbsorption: 0.6
+  highFreqAbsorption: 0.8
+  scattering: 0.6
+  lowFreqTransmission: 0.05
+  midFreqTransmission: 0.08
+  highFreqTransmission: 0.1
